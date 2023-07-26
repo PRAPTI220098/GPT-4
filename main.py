@@ -1,36 +1,62 @@
-# -*- coding: utf-8 -*-
-
 import requests
 import telebot
 from telebot import types
 
-# Replace 'YOUR_TELEGRAM_BOT_TOKEN' with your actual Telegram bot token
-bot_token = '6222084445:AAEp3MD8bjXN3xTAzm9NVTZU593IHgUtkIY'
-bot = telebot.TeleBot(bot_token)
+# Replace 'YOUR_BOT_TOKEN' with your actual Telegram bot token
+bot = telebot.TeleBot('6222084445:AAEp3MD8bjXN3xTAzm9NVTZU593IHgUtkIY')
 
-# Replace 'YOUR_API_ENDPOINT' with the provided API endpoint
-api_endpoint = 'https://gptzaid.zaidbot.repl.co/1/text={message_text}'
+def chat_with_gpt(message_text):
+    api_url = f'https://gptzaid.zaidbot.repl.co/1/text={message_text}'
+    response = requests.get(api_url).text
+    return response
 
-# Start command handler
 @bot.message_handler(commands=['start'])
 def start(message):
     buttons = types.InlineKeyboardMarkup(row_width=2)
-    but1 = types.InlineKeyboardButton(text='👨🏻‍💻 Developer', url='https://t.me/SANCHIT_0FFICIAL')
+    but1 = types.InlineKeyboardButton(text='👨🏻‍💻 Developer', url='https://t.me/S4NCHIT')
     but2 = types.InlineKeyboardButton(text='📣 Channel', url='https://t.me/+Q5RcaQe268lmYmI9')
     buttons.add(but1, but2)
-    bot.send_message(message.chat.id, text=f"•⚜️ Hii {message.from_user.first_name} \n\n•😘 Welcome To SanchitGPT BOT\n\n•😇 Please Ask Your Questions\n\n•🙇 I Hope Can Help You 👍", reply_to_message_id=message.message_id, reply_markup=buttons)
+    
+    welcome_message = f"👋 Hi {message.from_user.first_name}!\n\n" \
+                      f"😃 Welcome to SanchitGPT BOT!\n\n" \
+                      f"💬 I am here to answer your questions and have a conversation with you.\n\n" \
+                      f"✨ Just type your message, and I'll do my best to respond.\n\n" \
+                      f"👨🏻‍💻 If you need to contact the developer or join the channel, check the buttons below.\n"
 
-# Message handler
+    bot.send_message(message.chat.id, text=welcome_message, reply_markup=buttons)
+
 @bot.message_handler(func=lambda message: True)
-def reply_to_message(message):
-    # Get the user's message
-    user_message = message.text
+def handle_message(message):
+    user_input = message.text
+    if user_input.lower() == 'exit':
+        bot.send_message(message.chat.id, "Goodbye!")
+        return
 
-    # Call the GPT API to get the response
-    response = requests.get(api_endpoint.format(message_text=user_message)).text
+    # Send the 🤔 thinking emoji as part of the response message
+    response_text = "🤔 " + chat_with_gpt(user_input)
 
-    # Send the response back to the user
-    bot.send_message(message.chat.id, response)
+    # Remove the 🤔 thinking emoji from the response_text
+    response_text = response_text.replace("🤔", "").strip()
 
-# Start the bot
-bot.polling()
+    # Add like and dislike buttons to the answer
+    reply_markup = types.InlineKeyboardMarkup(row_width=2)
+    like_button = types.InlineKeyboardButton(text='👍 Like', callback_data='like')
+    dislike_button = types.InlineKeyboardButton(text='👎 Dislike', callback_data='dislike')
+    reply_markup.add(like_button, dislike_button)
+
+    # Send the response with the like and dislike buttons
+    bot.send_message(message.chat.id, response_text, reply_markup=reply_markup)
+
+@bot.callback_query_handler(func=lambda call: True)
+def handle_callback(call):
+    if call.data == 'like':
+        bot.answer_callback_query(call.id, "You liked the answer. Thank you!")
+    elif call.data == 'dislike':
+        bot.answer_callback_query(call.id, "You disliked the answer. We'll improve!")
+
+def main():
+    print("ChatGPT Telegram Bot is running...")
+    bot.polling()
+
+if __name__ == "__main__":
+    main()
