@@ -16,7 +16,7 @@ api_endpoint = 'https://gptzaid.zaidbot.repl.co/1/text={message_text}'
 def start(message):
     buttons = types.InlineKeyboardMarkup(row_width=2)
     but1 = types.InlineKeyboardButton(text='👨🏻‍💻 Developer', url='https://t.me/SANCHIT_0FFICIAL')
-    but2 = types.InlineKeyboardButton(text='🤡 Channel', url='https://t.me/+Q5RcaQe268lmYmI9')
+    but2 = types.InlineKeyboardButton(text='📣 Channel', url='https://t.me/+Q5RcaQe268lmYmI9')
     buttons.add(but1, but2)
     bot.send_message(message.chat.id, text=f"•⚜️ Hii {message.from_user.first_name} \n\n•😘 Welcome To SanchitGPT BOT\n\n•😇 Please Ask Your Questions\n\n•🙇 I Hope Can Help You 👍", reply_to_message_id=message.message_id, reply_markup=buttons)
 
