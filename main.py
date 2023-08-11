@@ -9,8 +9,8 @@ except ModuleNotFoundError:
     os.system('pip install python-telegram-bot requests googletrans')
     os.system('clear')
 
-# Your existing code here (import statements and other code)
-from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
+# Rest of your code...
+from telegram.ext import Updater, MessageHandler, CommandHandler, Filters
 import requests
 import json
 from googletrans import Translator
