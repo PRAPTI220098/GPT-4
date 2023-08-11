@@ -1,25 +1,13 @@
 try:
-	import os
-	from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
-import requests
-import json
-from googletrans import Translator
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+    import os
+    from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
+    import requests
+    import json
+    from googletrans import Translator
+    from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 except ModuleNotFoundError:
-	os.system('pip install Updatet')
-	os.system('pip install MessageHandler')
-	os.system('pip install Filters')
-	os.system('pip install CommandHandler')
-	os.system('pip install os')
-	os.system('pip install requests')
-	os.system('pip install googletrans')
-	os.system('pip install json')
-	os.system("pip install Translator")
-	os.system("pip install InlineKeyboardButton")
-	os.system("pip install InlineKeyboardMarkup")
-	os.system("pip install python-telegram-bot")
-	os.system("pip install googletrans==4.0.0-rc1")
-	os.system("clear")
+    os.system('pip install python-telegram-bot requests googletrans')
+    os.system('clear')
 
 # Your existing code here (import statements and other code)
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
