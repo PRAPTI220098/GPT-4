@@ -1,25 +1,25 @@
-import importlib
-import subprocess
-
-required_libraries = ['telegram', 'requests', 'googletrans','json','Updater', 'MessageHandler', 'Filters', 'CommandHandler', 'InlineKeyboardButton', 'InlineKeyboardMarkup']
-
-not_installed_libraries = []
-
-for library in required_libraries:
-    try:
-        importlib.import_module(library)
-    except ImportError:
-        not_installed_libraries.append(library)
-
-if not_installed_libraries:
-    print("Installing required libraries...")
-    try:
-        subprocess.check_call(["pip", "install"] + not_installed_libraries)
-        print("All required libraries installed successfully!")
-    except Exception as e:
-        print("Failed to install required libraries:", e)
-else:
-    print("All required libraries are already installed.")
+try:
+	import os
+	from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
+import requests
+import json
+from googletrans import Translator
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+except ModuleNotFoundError:
+	os.system('pip install Updatet')
+	os.system('pip install MessageHandler')
+	os.system('pip install Filters')
+	os.system('pip install CommandHandler')
+	os.system('pip install os')
+	os.system('pip install requests')
+	os.system('pip install googletrans')
+	os.system('pip install json')
+	os.system("pip install Translator")
+	os.system("pip install InlineKeyboardButton")
+	os.system("pip install InlineKeyboardMarkup")
+	os.system("pip install python-telegram-bot")
+	os.system("pip install googletrans==4.0.0-rc1")
+	os.system("clear")
 
 # Your existing code here (import statements and other code)
 from telegram.ext import Updater, MessageHandler, Filters, CommandHandler
